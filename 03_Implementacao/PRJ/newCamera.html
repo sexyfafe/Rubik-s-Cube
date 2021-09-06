@@ -1,0 +1,121 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/insertManual2D.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/camera.css">
+    <link rel="shortcut icon" href="#">
+</head>
+
+<body onload="getUsernameFromUID(firebase.database(), 'usernameText')">
+
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>  
+
+    <script src="js/Firebase/firebase.js"></script>
+
+    <script >
+            var firebaseConfig = {
+                apiKey: "AIzaSyA0ZJiXyw8sjQWLFiCkP5wwb8cql-rKCAc",
+                authDomain: "rubik-cube-finalproject.firebaseapp.com",
+                databaseURL: "https://rubik-cube-finalproject-default-rtdb.europe-west1.firebasedatabase.app/",
+                projectId: "rubik-cube-finalproject",
+                storageBucket: "rubik-cube-finalproject.appspot.com",
+                messagingSenderId: "755181254501",
+                appId: "1:755181254501:web:bc110e65e0fe9ee233d38c",
+                measurementId: "G-BXHNXEW7FW"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+
+            firebaseCheckIfUserIsLoggedIn(firebase.auth(), "Login.html");
+    </script>
+
+<div id="navigationTab">
+    <div id="navigationUser">
+        <div class="d-flex justify-content-center align-items-center">
+            <a href="camera.html">
+                <button class="glow-on-hover" type="button">
+                    <img src="images/camera.png" alt="" width="50" height="50">
+                </button>
+            </a>
+            <a href="index.html">
+                <button class="glow-on-hover" type="button">
+                    <img src="images/rubik.png" alt="" width="50" height="50">
+                </button>
+            </a>
+            <a href="Manual2D.html">
+                <button class="glow-on-hover" type="button">
+                    2D Custom
+                </button>
+            </a>
+
+            <a href="Challenge.html">
+                <button class="glow-on-hover" type="button">
+                    Challenge
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <nav id="navigation">
+        <menu id="userData">
+            <menuitem>
+                <a class="textColorWhite buttonDropdpwn" id="usernameText">...</a>
+                <menu>
+                    <menuitem>
+                        <a class="buttonDropdpwn" href="GlobalRanking.html">Global Ranking</a>
+                    </menuitem>
+                    <menuitem>
+                        <a class="buttonDropdpwn" href="MyRanking.html">My Ranking</a>
+                    </menuitem>
+                    <menuitem>
+                        <a class="buttonDropdpwn" id="validateVideosBtn" href="validateVideo.html"
+                           style="display: none;">Validate Videos</a>
+                    </menuitem>
+                    <menuitem>
+                        <a class="buttonDropdpwn" href="#" id="logout">Logout</a>
+                    </menuitem>
+                </menu>
+            </menuitem>
+        </menu>
+    </nav>
+
+    <div class="container">
+        <p id="message" class="textColorWhite"></p>
+    </div>
+</div>
+
+    <video id="cam_input" height="480" width="640" style="display: none;"></video>
+
+    <div id="mainBody">
+        <div id="CameraContainer">
+            <canvas id="canvas_output"></canvas>
+        </div>
+        <div id="Cube2D">
+            <div>
+                <canvas id="canvas2DCube" width="500" height="500"></canvas>   
+            </div>
+        </div>
+    </div>
+
+
+    <script async src="js/Camera/opencv.js" onload="startCamera();" type="text/javascript"></script>
+    <script src="js/NewCamera/videoProcessing.js"></script>
+    <script src="js/NewCamera/camera.js"></script>
+    <script src="js/matrixCube.js"></script>
+    <script src="js/Graphics2D/cube2D.js"></script>
+
+</body>
+</html>

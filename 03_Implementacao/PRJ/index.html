@@ -1,0 +1,247 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="#">
+</head>
+
+<body onload="getUsernameFromUID(firebase.database(), 'usernameText')">
+
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+
+<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+
+<script src="js/Leardboard/tables.js"></script>
+<script type="text/javascript" src="js/Firebase/firebaseData.js"></script>
+<script src="js/Firebase/firebase.js"></script>
+
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyA0ZJiXyw8sjQWLFiCkP5wwb8cql-rKCAc",
+        authDomain: "rubik-cube-finalproject.firebaseapp.com",
+        databaseURL: "https://rubik-cube-finalproject-default-rtdb.europe-west1.firebasedatabase.app/",
+        projectId: "rubik-cube-finalproject",
+        storageBucket: "rubik-cube-finalproject.appspot.com",
+        messagingSenderId: "755181254501",
+        appId: "1:755181254501:web:bc110e65e0fe9ee233d38c",
+        measurementId: "G-BXHNXEW7FW"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    firebaseCheckIfUserIsLoggedIn(firebase.auth(), "Login.html");
+</script>
+
+
+<div id="navigationTab">
+    <div id="navigationUser">
+        <div class="d-flex justify-content-center align-items-center">
+            <a href="camera.html">
+                <button class="glow-on-hover" type="button">
+                    <img src="images/camera.png" alt="" width="50" height="50">
+                </button>
+            </a>
+            <a href="index.html">
+                <button class="glow-on-hover" type="button">
+                    <img src="images/rubik.png" alt="" width="50" height="50">
+                </button>
+            </a>
+            <a href="Manual2D.html">
+                <button class="glow-on-hover" type="button">
+                    2D Custom
+                </button>
+            </a>
+
+            <a href="Challenge.html">
+                <button class="glow-on-hover" type="button">
+                    Challenge
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <nav id="navigation">
+        <menu id="userData">
+            <menuitem>
+                <a class="textColorWhite buttonDropdpwn" id="usernameText">...</a>
+                <menu>
+                    <menuitem>
+                        <a class="buttonDropdpwn" href="GlobalRanking.html">Global Ranking</a>
+                    </menuitem>
+                    <menuitem>
+                        <a class="buttonDropdpwn" href="MyRanking.html">My Ranking</a>
+                    </menuitem>
+                    <menuitem>
+                        <a class="buttonDropdpwn" id="validateVideosBtn" href="validateVideo.html"
+                           style="display: none;">Validate Videos</a>
+                    </menuitem>
+                    <menuitem>
+                        <a class="buttonDropdpwn" href="#" id="logout">Logout</a>
+                    </menuitem>
+                </menu>
+            </menuitem>
+        </menu>
+    </nav>
+    <div id="userData2" >
+        <h3 class="textColorWhite">Suggestion:</h3>
+        <h4 id="suggestion" class="textColorWhite">If you need help :)</h4>
+    </div>
+</div>
+
+
+<div id="loaderContainer" class="loaderContainer">
+    <img id="loadingGif" src="images/loading.gif">
+</div>
+
+
+<div id="mainBody" class="row">
+    <div id="Cube3D" class=" col-lg-7 col-md-12">
+        <div id="render3Dcube" class=""></div>
+    </div>
+    <div id="Cube2D" class=" col-lg-5 col-md-12 pt-5">
+        <div>
+            <canvas id="canvas2DCube" width="500" height="500"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="buttons">
+    <div class="topButtons">
+
+        <button class="name noselect buttonAnimation" id="generateRandomRotation">Shuffle</button>
+        <div class="d-flex justify-content-between">
+            <button class="name noselect buttonAnimation" id="SolveBack" style="display :none">Move Back</button>
+            <button class="name noselect buttonstatic zIndex10" id="PlayStop">Stop</button>
+            <button class="name noselect buttonAnimation " id="SolveFront"style="display :none">Next Move</button>
+        </div>
+
+        <button class="name noselect buttonAnimation" id="ResolucaoAutomatica">Solve</button>
+        <button class="name noselect buttonAnimation" id="SolvingByStepOrLayer">Solving by Step</button>
+
+    </div>
+
+    <div class="lowerButtons w-100">
+        <div class="fullWidth" id="stepsButtons">
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep1" src="images/Cube/step 1.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaFase1"style="display :none">Step 1</button>
+
+            </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep2" src="images/Cube/step 2.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaFase2"style="display :none">Step 2</button>
+
+            </div>
+            <div>
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep3" src="images/Cube/step 3.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaFase3"style="display :none">Step 3</button>
+
+            </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep4" src="images/Cube/step 4.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaFase4"style="display :none">Step 4</button>
+
+            </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep5" src="images/Cube/step 5.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaFase5"style="display :none">Step 5</button>
+
+            </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep6" src="images/Cube/step 6.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaFase6"style="display :none">Step 6</button>
+
+            </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep7" src="images/Cube/step 7.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaFase7"style="display :none">Step 7</button>
+
+            </div>  
+        </div>
+
+        
+        <div class="fullWidth" id="layersButtons" style="display: none;">
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep8" src="images/Cube/step 2.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaPrimeiraCamada" style="display :none">First Layer</button>
+
+            </div>  
+
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep9" src="images/Cube/step 3.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaSegundaCamada"style="display :none">Second Layer</button>
+
+            </div>  
+
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center pt-4 pb-4">
+                    <img id="imageStep10" src="images/Cube/step 7.png" width="75">
+                </div>
+                <button class="name noselect buttonAnimation" id="ResolucaoAutomaticaTerceiraCamada"style="display :none">Third Layer</button>
+
+            </div>  
+
+        </div>
+        
+    </div>
+</div>
+
+<script src="js/matrixCube.js"></script>
+<script src="js/Graphics2D/cube2D.js"></script>
+<script type="text/javascript" src="js/stages/stage1.js"></script>
+<script type="text/javascript" src="js/stages/stage2.js"></script>
+<script type="text/javascript" src="js/stages/stage3.js"></script>
+<script type="module" src="js/Graphics3D/cube3D.js"></script>
+<script type="module" src="js/mainCube.js"></script>
+
+<script>
+    document.getElementById("logout").addEventListener("click", function () {
+        firebaseLogout();
+    });
+</script>
+
+</body>
+
+</html>

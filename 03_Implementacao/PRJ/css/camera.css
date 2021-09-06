@@ -1,0 +1,13 @@
+#mainBody{
+    display: flex;
+    justify-content: space-around;
+}
+
+#CameraContainer{
+    width: 100%;
+    text-align: center;
+}
+
+#canvas_output{
+    display: inline;
+}

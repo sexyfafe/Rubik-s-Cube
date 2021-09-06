@@ -1,0 +1,263 @@
+body{
+    margin: 0;
+    padding: 0;
+
+    width: 100vw;
+    background: rgb(35, 35, 35) !important;
+}
+
+nav{
+    width: 100vw;
+}
+
+#navigationTab{
+  height: 10vh;
+}
+
+#navigationUser{
+  height: 15vh;
+}
+
+#userData{
+    position: absolute;
+    top: 10px;
+    right: 0;
+    z-index: 10;
+}
+#userData2{
+    position: absolute;
+    top: 10px;
+    z-index: 10;
+}
+.TopContainer{
+    position: relative;
+    display: flex;
+    text-align: center;
+    color: white; 
+    height: 100%;
+    width: 10%;
+}
+
+#timerContent{
+  width: 100vw;
+  height: 70vh;
+}
+
+.classJoao{
+  width: 95vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.border{
+    width: 50%;
+}
+
+.imageInsideImage{
+    position: absolute;
+    top: 100%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+}
+
+canvas{
+    display: block;
+}
+
+#render3Dcube{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+
+#mainBody{
+    width: 100vw;
+}
+
+
+#Cube2D{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loaderContainer{
+width: 100vw;
+height: 90vh;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+#loadingGif {
+height: 100px;
+width: 100px;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100vw;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+}
+
+#showColor{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.buttonsCamera{
+display: flex;
+justify-content: space-around;
+}
+
+.topButtons{
+display: flex;
+justify-content: space-around;
+margin-bottom: 40px;
+}
+
+.fullWidth{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.lowerButtons{
+  display: flex;
+  justify-content: space-around;
+}
+
+#suggestions{
+width: 100vw;
+height: 10vh;
+}
+
+.sliderCamera{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+
+
+#message{
+  text-align: center;
+  font-size: 4vh;
+  font-weight: bold;
+}
+
+/* Dropdown Button */
+
+
+
+body * {
+  margin:0;
+  padding:0;
+}
+
+/* HTML Nav Styles */
+/* HTML Nav Styles */
+/* HTML Nav Styles */
+nav menuitem {
+  position:relative;
+  display:block;
+  opacity:0;
+  cursor:pointer;
+}
+
+nav menuitem > menu {
+  position: absolute;
+  pointer-events:none;
+}
+nav > menu { display:flex; }
+
+nav > menu > menuitem { pointer-events: all; opacity:1; }
+menu menuitem a { white-space:nowrap; display:block; }
+  
+menuitem:hover > menu {
+  pointer-events:initial;
+}
+menuitem:hover > menu > menuitem,
+menu:hover > menuitem{
+  opacity:1;
+}
+nav > menu > menuitem menuitem menu {
+  transform:translateX(100%);
+  top:0; right:0;
+}
+/* User Styles Below Not Required */
+/* User Styles Below Not Required */
+/* User Styles Below Not Required */
+
+
+.textColorWhite{
+  color:#FFF !important;
+}
+
+nav a {
+  background:  linear-gradient(90deg, rgba(2,0,29,1) 0%, rgba(38,69,184,0.7738445720084909) 40%, rgba(38,69,184,0.7682423311121324) 60%, rgba(2,0,29,1) 100%);
+  color:#FFF;
+  min-width:190px;
+  transition: background 0.5s, color 0.5s, transform 0.5s;
+  margin:0px 6px 6px 0px;
+  padding:20px 40px;
+  box-sizing:border-box;
+  border-radius:3px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  position:relative;
+  text-align: center;
+}
+
+nav a:hover:before {
+  content: '';
+  top:0;left:0;
+  position:absolute;
+  background:rgba(0, 0, 0, 0.2);
+  width:100%;
+  height:100%;
+}
+
+nav > menu > menuitem > a + menu:after{
+  content: '';
+  position:absolute;
+  border:10px solid transparent;
+  border-top: 10px solid white;
+  left:12px;
+  top: -40px;  
+}
+nav menuitem > menu > menuitem > a + menu:after{ 
+  content: '';
+  position:absolute;
+  border:10px solid transparent;
+  border-left: 10px solid white;
+  top: 20px;
+  left:-180px;
+  transition: opacity 0.6s, transform 0s;
+}
+
+nav > menu > menuitem > menu > menuitem{
+  transition: transform 0.6s, opacity 0.6s;
+  transform:translateY(150%);
+  opacity:0;
+}
+nav > menu > menuitem:hover > menu > menuitem,
+nav > menu > menuitem.hover > menu > menuitem{
+  transform:translateY(0%);
+  opacity: 1;
+}
+
+menuitem > menu > menuitem > menu > menuitem{
+  transition: transform 0.6s, opacity 0.6s;
+  transform:translateX(195px) translateY(0%);
+  opacity: 0;
+} 
+menuitem > menu > menuitem:hover > menu > menuitem,  
+menuitem > menu > menuitem.hover > menu > menuitem{  
+  transform:translateX(0) translateY(0%);
+  opacity: 1;
+}

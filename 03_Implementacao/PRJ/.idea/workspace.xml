@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1f00cf49-cfe0-49d4-bc49-48ca20580ecd" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$USER_HOME$" />
+  </component>
+  <component name="ProjectId" id="1rssBGPFRqgtmXorTcW36DSu5P8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/js/stages" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\fafito\Documents\Projeto\Three\js\stages" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/camera.html/index.html?_ij_reload" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1f00cf49-cfe0-49d4-bc49-48ca20580ecd" name="Default Changelist" comment="" />
+      <created>1619775994623</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1619775994623</updated>
+      <workItem from="1619775995857" duration="227000" />
+      <workItem from="1619789055944" duration="1686000" />
+      <workItem from="1619811834241" duration="548000" />
+      <workItem from="1620420249960" duration="190000" />
+      <workItem from="1622103729383" duration="10086000" />
+      <workItem from="1622144084160" duration="7102000" />
+      <workItem from="1622192170321" duration="14787000" />
+      <workItem from="1622539577329" duration="280000" />
+      <workItem from="1622976285789" duration="461000" />
+      <workItem from="1623095567837" duration="714000" />
+      <workItem from="1623096303410" duration="2328000" />
+      <workItem from="1629648681878" duration="66000" />
+      <workItem from="1629648758645" duration="5870000" />
+      <workItem from="1629711854253" duration="20709000" />
+      <workItem from="1629749370837" duration="17259000" />
+      <workItem from="1629797727035" duration="4174000" />
+      <workItem from="1630854408911" duration="2348000" />
+      <workItem from="1630922669261" duration="3991000" />
+      <workItem from="1630963158135" duration="990000" />
+      <workItem from="1630967106847" duration="563000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

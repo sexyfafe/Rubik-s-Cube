@@ -21,7 +21,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/js/stages" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -67,6 +67,8 @@
       <workItem from="1630963158135" duration="990000" />
       <workItem from="1630967106847" duration="754000" />
       <workItem from="1630970794721" duration="108000" />
+      <workItem from="1631616526482" duration="854000" />
+      <workItem from="1631626069996" duration="3063000" />
     </task>
     <servers />
   </component>

@@ -29,6 +29,7 @@ function main(){
 
             let rotation = self.cube2d.mousePressCenterPiece(e);
             rotateAllCube(rotation)
+
         }
     }, false)
 
@@ -73,6 +74,7 @@ function main(){
             document.getElementById("SolveFront").style.display = "none";
 
         }else{
+
             document.getElementById("PlayStop").innerHTML  = "Play"
             document.getElementById("SolveBack").style.display = "";
             document.getElementById("SolveFront").style.display = "";
@@ -120,11 +122,12 @@ function main(){
             self.cube.currentRotation = self.stage1Config.Complete(self.matrixCube.getStates().slice())
             self.cube.currentRotation += self.stage2Config.Complete(self.stage1Config.getEstado().slice())
             self.cube.currentRotation += self.stage3Config.Complete(self.stage2Config.getEstado().slice())
+            disableall()
         }
     });
     document.getElementById("SolvingByStepOrLayer").addEventListener("click", function(){
         self.stepByStep=!self.stepByStep
-        editSuggestion()
+
         if(self.stepByStep){
             document.getElementById("stepsButtons").style.display = "flex";
             document.getElementById("layersButtons").style.display = "none";
@@ -138,6 +141,10 @@ function main(){
             document.getElementById("SolvingByStepOrLayer").innerHTML  = "Solving by Layer"
 
             //disableButton("ResolucaoAutomaticaFase1", "imageStep1", true)
+        }
+        if(self.cube.currentRotation === ""){
+            //get suggestion after shuffle
+            editSuggestion()
         }
     });
 }
@@ -191,6 +198,10 @@ function animate3D(){
                     editSuggestion()
                     self.shuffle=false
                 }
+            }
+            if(self.cube.currentRotation === ""){
+                //get suggestion after shuffle
+                editSuggestion()
             }
         }
     }
@@ -310,6 +321,7 @@ function editSuggestion(){
         return
     }
     if(Suggestion===""){
+        document.getElementById("suggestion").innerHTML  = "If you need help :)"
         disableall()
     }else{
         document.getElementById("suggestion").innerHTML  = Suggestion

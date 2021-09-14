@@ -47,7 +47,8 @@
     
                 firebaseCheckIfUserIsLoggedIn(firebase.auth(), "Login.html");
                 getBestClassifications(100, "globalTable");
-        </script> 
+        </script>
+
         
 <div id="navigationTab">
     <div id="navigationUser">
@@ -117,5 +118,9 @@
             </div>
         </div>
 </body>
-
+    <script>
+        document.getElementById("logout").addEventListener("click", function () {
+            firebaseLogout();
+        });
+    </script>
 </html>

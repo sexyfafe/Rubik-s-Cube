@@ -9,12 +9,19 @@ function main(){
     self.oneMove = false
     self.oneMoveBack = false
     self.matrixCube = new MatrixCube();
+    self.pathImageFormula = "";
 
     if(sessionStorage.getItem("matrixState") != null){
         self.matrixCube.setStateInText(sessionStorage.getItem("matrixState"));
         sessionStorage.removeItem("matrixState")
     }
 
+    const img = document.getElementById("myImg");
+    img.onclick = function(){
+        if(self.pathImageFormula != "")
+            showImage(self.pathImageFormula);
+    }
+    document.getElementById("myImg").style.display = "none";
 
     self.stage1Config = new Stage1(self.matrixCube.getStates().slice())
     self.stage2Config = new Stage2(self.matrixCube.getStates().slice())
@@ -268,12 +275,15 @@ function disableall(){
     disableOrEnableButton("ResolucaoAutomaticaSegundaCamada", "imageStep9", true)
     disableOrEnableButton("ResolucaoAutomaticaTerceiraCamada", "imageStep10", true)
 }
+
 function editSuggestion(){
+    self.pathImageFormula = "";
 
     disableall()
     let Suggestion = self.stage1Config.GetTip1(self.matrixCube.getStates().slice(),self.stepByStep)
     if(Suggestion===""){
         Suggestion = self.stage1Config.GetTip2(self.matrixCube.getStates().slice(),self.stepByStep)
+        document.getElementById("myImg").style.display = "block";
     }else{
         document.getElementById("suggestion").innerHTML  = Suggestion
         disableOrEnableButton("ResolucaoAutomaticaFase1", "imageStep1", false)
@@ -286,6 +296,8 @@ function editSuggestion(){
         document.getElementById("suggestion").innerHTML  = Suggestion
         disableOrEnableButton("ResolucaoAutomaticaFase2", "imageStep2", false)
         disableOrEnableButton("ResolucaoAutomaticaPrimeiraCamada", "imageStep8", false)
+
+        self.pathImageFormula = "images/Formulas/Formulas1.png";
         return
     }
     if(Suggestion===""){
@@ -294,6 +306,8 @@ function editSuggestion(){
         document.getElementById("suggestion").innerHTML  = Suggestion
         disableOrEnableButton("ResolucaoAutomaticaFase3", "imageStep3", false)
         disableOrEnableButton("ResolucaoAutomaticaSegundaCamada", "imageStep9", false)
+
+        self.pathImageFormula = "images/Formulas/Formulas2e3.png";
         return
     }
     if(Suggestion===""){
@@ -302,6 +316,8 @@ function editSuggestion(){
         document.getElementById("suggestion").innerHTML  = Suggestion
         disableOrEnableButton("ResolucaoAutomaticaFase4", "imageStep4", false)
         disableOrEnableButton("ResolucaoAutomaticaTerceiraCamada", "imageStep10", false)
+
+        self.pathImageFormula = "images/Formulas/Formulas4.png";
         return
     }
     if(Suggestion===""){
@@ -310,6 +326,8 @@ function editSuggestion(){
         document.getElementById("suggestion").innerHTML  = Suggestion
         disableOrEnableButton("ResolucaoAutomaticaFase5", "imageStep5", false)
         disableOrEnableButton("ResolucaoAutomaticaTerceiraCamada", "imageStep10", false)
+
+        self.pathImageFormula = "images/Formulas/Formulas5.png";
         return
     }
     if(Suggestion===""){
@@ -318,6 +336,8 @@ function editSuggestion(){
         document.getElementById("suggestion").innerHTML  = Suggestion
         disableOrEnableButton("ResolucaoAutomaticaFase6", "imageStep6", false)
         disableOrEnableButton("ResolucaoAutomaticaTerceiraCamada", "imageStep10", false)
+
+        self.pathImageFormula = "images/Formulas/Formulas6.png";
         return
     }
     if(Suggestion===""){
@@ -327,10 +347,33 @@ function editSuggestion(){
         document.getElementById("suggestion").innerHTML  = Suggestion
         disableOrEnableButton("ResolucaoAutomaticaFase7", "imageStep7", false)
         disableOrEnableButton("ResolucaoAutomaticaTerceiraCamada", "imageStep10", false)
+
+        self.pathImageFormula = "images/Formulas/Formulas7.png";
         return
     }
+    document.getElementById("myImg").style.display = "none";
 
 }
+
+function showImage(path){
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var modalImg = document.getElementById("img01");
+    modalImg.src = path;
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+}
+
+
 function checkRotation(type){
     if("LF" === type)
         self.cube.rotateLeft(true);

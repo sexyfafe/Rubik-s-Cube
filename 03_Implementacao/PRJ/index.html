@@ -106,9 +106,11 @@
             </menuitem>
         </menu>
     </nav>
-    <div id="userData2" >
-        <h3 class="textColorWhite">Suggestion:</h3>
-        <h4 id="suggestion" class="textColorWhite">If you need help :)</h4>
+    <div id="userData2" class="d-flex flex-column justify-content-center">
+        <h3 class="textColorWhite m-auto">Suggestion:</h3>
+        <h4 id="suggestion" class="textColorWhite m-auto pb-4 text-center">If you need help :)</h4>
+
+        <button class="name noselect buttonAnimation m-auto" id="myImg">Show Formula</button>
     </div>
 </div>
 
@@ -141,7 +143,6 @@
 
         <button class="name noselect buttonAnimation" id="ResolucaoAutomatica">Solve</button>
         <button class="name noselect buttonAnimation" id="SolvingByStepOrLayer">Solving by Step</button>
-
     </div>
 
     <div class="lowerButtons w-100">
@@ -228,6 +229,20 @@
     </div>
 </div>
 
+<div id="showFormulas" class="container">
+
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+    <!-- The Close Button -->
+    <span class="close">&times;</span>
+
+    <!-- Modal Content (The Image) -->
+    <img class="modal-content" id="img01">
+
+</div>
+</div>
 <script src="js/matrixCube.js"></script>
 <script src="js/Graphics2D/cube2D.js"></script>
 <script type="text/javascript" src="js/stages/stage1.js"></script>
@@ -241,6 +256,7 @@
         firebaseLogout();
     });
 </script>
+
 
 </body>
 

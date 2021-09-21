@@ -326,7 +326,7 @@ export class Cube3D {
     }
 }
 
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({ antialias : true });
 var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
 var scene = new THREE.Scene();
 let light;

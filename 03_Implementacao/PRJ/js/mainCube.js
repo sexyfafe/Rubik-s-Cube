@@ -10,6 +10,10 @@ function main(){
     self.oneMoveBack = false
     self.matrixCube = new MatrixCube();
     self.pathImageFormula = "";
+    self.case=-1
+
+
+
 
     if(sessionStorage.getItem("matrixState") != null){
         self.matrixCube.setStateInText(sessionStorage.getItem("matrixState"));
@@ -40,7 +44,7 @@ function main(){
         }
     }, false)
 
-    animate();
+
     document.getElementById("ResolucaoAutomaticaTerceiraCamada").addEventListener("click", function(){
         if(self.cube.currentRotation === ""){
             self.cube.currentRotation = self.stage3Config.Complete(self.matrixCube.getStates().slice())
@@ -154,16 +158,55 @@ function main(){
             editSuggestion()
         }
     });
+    self.stop = false;
+    self.frameCount = 0;
+    self.$results = $("#results");
+
+    //animate();
+    startAnimating(100);
+}
+function startAnimating(fps) {
+    self.fpsInterval = 1000 / fps;
+    self.then = Date.now();
+    self.startTime = self.then;
+    console.log(self.startTime);
+    animateV2();
 }
 
+function animateV2() {
+
+    // stop
+    if (stop) {
+        return;
+    }
+
+    // request another frame
+    requestAnimationFrame(animateV2);
+
+    // calc elapsed time since last loop
+    self.now = Date.now();
+    self.elapsed = self.now - self.then;
+
+    // if enough time has elapsed, draw the next frame
+    if (self.elapsed > self.fpsInterval) {
+
+        // Get ready for next frame by setting then=now, but...
+        // Also, adjust for fpsInterval not being multiple of 16.67
+        self.then = self.now - (self.elapsed % self.fpsInterval);
+
+        // draw stuff here
+        animate()
+    }
+}
 function animate() {
-    requestAnimationFrame(animate);
+
     if(self.cube.isFinnishRendering){
         document.getElementById('loaderContainer').style.display = "none";
         document.getElementById('navigationUser').style.display = "block";
         document.getElementById('navigation').style.display = "block";
         document.getElementById('mainBody').style.display = "flex";
-        animate3D();
+        //animate3D();
+        animateMy3D();
         draw2D();
 
     }
@@ -176,44 +219,50 @@ function animate() {
     
 }
 
-function animate3D(){
-    if(self.cube.currentRotation !== ""&&(self.shuffle||self.play||self.oneMove)||self.oneMoveBack){
-        if(self.cube.amountAlreadyRotated !== 90){
-            if(self.oneMoveBack){
-                checkRotation(self.cube.currentRotationBack.slice((self.cube.currentRotationBack.length-2), (self.cube.currentRotationBack.length)));
-            }else {
-                checkRotation(self.cube.currentRotation.slice(0, 2));
+
+function animateMy3D(){
+    switch (self.case) {
+        case 0://animation not finished
+            if(self.cube.amountAlreadyRotated !== 90){
+                if(self.oneMoveBack){
+                    checkRotation(self.cube.currentRotationBack.slice((self.cube.currentRotationBack.length-2), (self.cube.currentRotationBack.length)));
+                }else {
+                    checkRotation(self.cube.currentRotation.slice(0, 2));
+                }
+                self.cube.amountAlreadyRotated += self.cube.rotationPerFrame;
+            }else{
+                self.case=1
             }
-            self.cube.amountAlreadyRotated += self.cube.rotationPerFrame;
-        }
-        else{
+            break;
+
+        case 1://animation start
             if(self.oneMoveBack){
-                self.oneMoveBack=false
-                self.oneMove=false
                 self.matrixCube.checkRotation(self.cube.currentRotationBack.slice((self.cube.currentRotationBack.length-2), (self.cube.currentRotationBack.length)));
                 self.cube.currentRotation = invertRotation(self.cube.currentRotationBack.slice((self.cube.currentRotationBack.length-2), (self.cube.currentRotationBack.length)))+self.cube.currentRotation;
                 self.cube.currentRotationBack=self.cube.currentRotationBack.slice(0, self.cube.currentRotationBack.length-2)
                 self.cube.amountAlreadyRotated = 0;
             }else{
-                self.oneMove=false
                 self.matrixCube.checkRotation(self.cube.currentRotation.slice(0, 2));
                 self.cube.currentRotationBack+=invertRotation(self.cube.currentRotation.slice(0, 2))
                 self.cube.currentRotation = self.cube.currentRotation.slice(2);
                 self.cube.amountAlreadyRotated = 0;
-                if(self.cube.currentRotation === ""){
-                    //get suggestion after shuffle
-                    editSuggestion()
-                    self.shuffle=false
-                }
             }
+            self.oneMoveBack=false
+            self.oneMove=false
             if(self.cube.currentRotation === ""){
                 //get suggestion after shuffle
                 editSuggestion()
             }
-        }
+            self.case=-1
+
+            break;
+        default:
+            if((self.cube.currentRotation !== ""&&self.play)||self.oneMove||self.oneMoveBack){
+                self.case=0
+            }
+            break;
     }
 }
-
 function draw2D(){
     //Set the canvas size to the clientes values
     self.context.strokeStyle = "#000000";
@@ -255,7 +304,7 @@ function rotateAllCube(num){
 function disableOrEnableButton(buttonID, imageID, disableButton){
     if(disableButton){
         document.getElementById(buttonID).style.display = "none";
-        document.getElementById(imageID).style.opacity = 0.5;
+        document.getElementById(imageID).style.opacity = 0.3;
     }
     else{
         document.getElementById(buttonID).style.display = "block";
@@ -458,4 +507,44 @@ function getRandomRotation(numberMoves) {
         moves += movesPosible[random]
     }
     return moves
+}
+function animate3D(){
+    if(self.cube.currentRotation !== ""&&(self.shuffle||self.play||self.oneMove)||self.oneMoveBack){
+        if(self.cube.amountAlreadyRotated !== 90){
+            if(self.oneMoveBack){
+                checkRotation(self.cube.currentRotationBack.slice((self.cube.currentRotationBack.length-2), (self.cube.currentRotationBack.length)));
+            }else {
+                checkRotation(self.cube.currentRotation.slice(0, 2));
+                console.log("AQUI")
+            }
+            self.cube.amountAlreadyRotated += self.cube.rotationPerFrame;
+        }
+        else{
+            if(self.oneMoveBack){
+                console.log("AQUI2")
+                self.oneMoveBack=false
+                self.oneMove=false
+                self.matrixCube.checkRotation(self.cube.currentRotationBack.slice((self.cube.currentRotationBack.length-2), (self.cube.currentRotationBack.length)));
+                self.cube.currentRotation = invertRotation(self.cube.currentRotationBack.slice((self.cube.currentRotationBack.length-2), (self.cube.currentRotationBack.length)))+self.cube.currentRotation;
+                self.cube.currentRotationBack=self.cube.currentRotationBack.slice(0, self.cube.currentRotationBack.length-2)
+                self.cube.amountAlreadyRotated = 0;
+            }else{
+                console.log("AQUI3")
+                self.oneMove=false
+                self.matrixCube.checkRotation(self.cube.currentRotation.slice(0, 2));
+                self.cube.currentRotationBack+=invertRotation(self.cube.currentRotation.slice(0, 2))
+                self.cube.currentRotation = self.cube.currentRotation.slice(2);
+                self.cube.amountAlreadyRotated = 0;
+                if(self.cube.currentRotation === ""){
+                    //get suggestion after shuffle
+                    editSuggestion()
+                    self.shuffle=false
+                }
+            }
+            if(self.cube.currentRotation === ""){
+                //get suggestion after shuffle
+                editSuggestion()
+            }
+        }
+    }
 }

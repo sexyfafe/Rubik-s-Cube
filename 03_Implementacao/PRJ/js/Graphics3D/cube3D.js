@@ -5,12 +5,12 @@ import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/th
 export class Cube3D {
     constructor(x, y, z, state) {
         this.currentCube = [];
-        this.distance = 2.4;
+        this.distance = 2.38;
 
         this.currentRotation = "";
         this.currentRotationBack = "";
         this.amountAlreadyRotated = 0;
-        this.rotationPerFrame = 10;
+        this.rotationPerFrame = 5;
         this.scale = 2;
 
         this.renderCountToFinnish = 0;
@@ -109,10 +109,12 @@ export class Cube3D {
             this.cube[this.realPositions[array[i]]].rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), THREE.Math.degToRad((toLeft)? this.rotationPerFrame : -this.rotationPerFrame));
         }
 
-        if(toLeft)
-            this.adjustTwoArrays([1, 7, 25, 19], [10, 4, 16, 22])
-        else
-            this.adjustTwoArrays([1, 19, 25, 7], [10, 22, 16, 4])    
+        if(this.amountAlreadyRotated+this.rotationPerFrame===90){
+            if(toLeft)
+                this.adjustTwoArrays([1, 7, 25, 19], [10, 4, 16, 22])
+            else
+                this.adjustTwoArrays([1, 19, 25, 7], [10, 22, 16, 4])
+        }
     }
 
     rotateMiddleVertical(toFront) {
@@ -120,11 +122,12 @@ export class Cube3D {
         for(let i = 9; i < 18; i++){
             this.cube[this.realPositions[i]].rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), THREE.Math.degToRad((toFront)? this.rotationPerFrame : -this.rotationPerFrame));
         }
-
-        if(toFront)
-            this.adjustTwoArrays([9, 11, 17, 15], [10, 14, 16, 12])
-        else
-            this.adjustTwoArrays([9, 15, 17, 11], [10, 12, 16, 14])
+        if(this.amountAlreadyRotated+this.rotationPerFrame===90){
+            if(toFront)
+                this.adjustTwoArrays([9, 11, 17, 15], [10, 14, 16, 12])
+            else
+                this.adjustTwoArrays([9, 15, 17, 11], [10, 12, 16, 14])
+        }
     }
 
     rotateMiddleHorizontal(toLeft){
@@ -133,11 +136,13 @@ export class Cube3D {
         for(let i = 0; i < 9; i++){
             this.cube[this.realPositions[array[i]]].rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), THREE.Math.degToRad((toLeft)? -this.rotationPerFrame : this.rotationPerFrame));
         }
+        if(this.amountAlreadyRotated+this.rotationPerFrame===90){
+            if(toLeft)
+                this.adjustTwoArrays([14, 22, 12, 4], [5, 23, 21, 3])
+            else
+                this.adjustTwoArrays([14, 4, 12, 22], [5, 3, 21, 23])
+        }
 
-        if(toLeft)
-            this.adjustTwoArrays([14, 22, 12, 4], [5, 23, 21, 3])
-        else
-            this.adjustTwoArrays([14, 4, 12, 22], [5, 3, 21, 23])   
     }
 
 
@@ -145,33 +150,39 @@ export class Cube3D {
         for(let i = 0; i < 9; i++){
             this.cube[this.realPositions[i]].rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), THREE.Math.degToRad((toFront)? this.rotationPerFrame : -this.rotationPerFrame));
         }
+        if(this.amountAlreadyRotated+this.rotationPerFrame===90){
+            if(toFront)
+                this.adjustTwoArrays([0, 2, 8, 6], [1, 5, 7, 3])
+            else
+                this.adjustTwoArrays([0, 6, 8, 2], [1, 3, 7, 5])
+        }
 
-        if(toFront)
-            this.adjustTwoArrays([0, 2, 8, 6], [1, 5, 7, 3])
-        else
-            this.adjustTwoArrays([0, 6, 8, 2], [1, 3, 7, 5])
     }
 
     rotateRight(toFront) {
         for(let i = 18; i < 27; i++){
             this.cube[this.realPositions[i]].rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), THREE.Math.degToRad((toFront)? this.rotationPerFrame : -this.rotationPerFrame));
         }
+        if(this.amountAlreadyRotated+this.rotationPerFrame===90){
+            if(toFront)
+                this.adjustTwoArrays([18, 20, 26, 24], [19, 23, 25, 21])
+            else
+                this.adjustTwoArrays([18, 24, 26, 20], [19, 21, 25, 23])
+        }
 
-        if(toFront)
-            this.adjustTwoArrays([18, 20, 26, 24], [19, 23, 25, 21])
-        else
-            this.adjustTwoArrays([18, 24, 26, 20], [19, 21, 25, 23])
     }
 
     rotateBack(toLeft){
         for(let i = 0; i <= 24; i+=3){
             this.cube[this.realPositions[i]].rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), THREE.Math.degToRad((toLeft)? this.rotationPerFrame : -this.rotationPerFrame));
         }
+        if(this.amountAlreadyRotated+this.rotationPerFrame===90){
+            if(toLeft)
+                this.adjustTwoArrays([3, 15, 21, 9],[0, 6, 24, 18])
+            else
+                this.adjustTwoArrays([0, 18, 24, 6],[9, 21, 15, 3])
+        }
 
-        if(toLeft)
-            this.adjustTwoArrays([3, 15, 21, 9],[0, 6, 24, 18])
-        else
-            this.adjustTwoArrays([0, 18, 24, 6],[9, 21, 15, 3])
     }
 
     rotateFront(toLeft){
@@ -180,11 +191,13 @@ export class Cube3D {
         for(let i = 0; i < 9; i++){
             this.cube[this.realPositions[array[i]]].rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), THREE.Math.degToRad((toLeft)? this.rotationPerFrame : -this.rotationPerFrame));
         }
+        if(this.amountAlreadyRotated+this.rotationPerFrame===90){
+            if(toLeft)
+                this.adjustTwoArrays([2, 8, 26, 20], [11, 5, 17, 23])
+            else
+                this.adjustTwoArrays([2, 20, 26, 8], [11, 23, 17, 5])
+        }
 
-        if(toLeft)
-            this.adjustTwoArrays([2, 8, 26, 20], [11, 5, 17, 23])
-        else
-            this.adjustTwoArrays([2, 20, 26, 8], [11, 23, 17, 5])    
     }
 
     rotateBottom(toLeft){
@@ -193,11 +206,13 @@ export class Cube3D {
         for(let i = 0; i < 9; i++){
             this.cube[this.realPositions[array[i]]].rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), THREE.Math.degToRad((toLeft)? -this.rotationPerFrame : this.rotationPerFrame));
         }
+        if(this.amountAlreadyRotated+this.rotationPerFrame===90){
+            if(toLeft)
+                this.adjustTwoArrays([2, 20, 18, 0], [11, 19, 9, 1])
+            else
+                this.adjustTwoArrays([2, 0, 18, 20], [11, 1, 9, 19])
+        }
 
-        if(toLeft)
-            this.adjustTwoArrays([2, 20, 18, 0], [11, 19, 9, 1])
-        else
-            this.adjustTwoArrays([2, 0, 18, 20], [11, 1, 9, 19])   
     }
 
     rotateTop(toLeft){
@@ -206,11 +221,13 @@ export class Cube3D {
         for(let i = 0; i < 9; i++){
             this.cube[this.realPositions[array[i]]].rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), THREE.Math.degToRad((toLeft)? -this.rotationPerFrame : this.rotationPerFrame));
         }
+        if(this.amountAlreadyRotated+this.rotationPerFrame===90){
+            if(toLeft)
+                this.adjustTwoArrays([17, 25, 15, 7], [8, 26, 24, 6])
+            else
+                this.adjustTwoArrays([17, 7, 15, 25], [8, 6, 24, 26])
+        }
 
-        if(toLeft)
-            this.adjustTwoArrays([17, 25, 15, 7], [8, 26, 24, 6])
-        else
-            this.adjustTwoArrays([17, 7, 15, 25], [8, 6, 24, 26])   
     }
 
     adjustTwoArrays(array, secondArray){

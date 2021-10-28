@@ -4,14 +4,13 @@ function main(){
     //Draw 2D Cube
     self.context = document.getElementById('canvas2DCube').getContext("2d");
     self.stepByStep = true
-    self.shuffle=false
     self.play = true
     self.oneMove = false
     self.oneMoveBack = false
     self.matrixCube = new MatrixCube();
     self.pathImageFormula = "";
     self.case=-1
-
+    self.audio = new Audio('./audios/rotation2.mp3');
 
 
 
@@ -69,7 +68,6 @@ function main(){
         }else{
             self.cube.currentRotation = getRandomRotation(15)
         }
-        self.shuffle = true
     });
     document.getElementById("SolveBack").addEventListener("click", function(){
         self.oneMoveBack=true
@@ -158,6 +156,33 @@ function main(){
             editSuggestion()
         }
     });
+
+
+    var sliderFPS = document.getElementById("sliderFPS");
+    sliderFPS.onchange = function() {
+        var output =  parseInt(sliderFPS.value)
+        switch (output) {
+            case 1:
+                self.cube.nextRotationPerFrame=1
+                break;
+            case 2:
+                self.cube.nextRotationPerFrame=2
+                break;
+            case 3:
+                self.cube.nextRotationPerFrame=5
+                break;
+            case 4:
+                self.cube.nextRotationPerFrame=10
+                break;
+            case 5:
+                self.cube.nextRotationPerFrame=15
+                break;
+            case 6:
+                self.cube.nextRotationPerFrame=30
+                break;
+        }
+    }
+
     self.stop = false;
     self.frameCount = 0;
     self.$results = $("#results");
@@ -169,7 +194,7 @@ function startAnimating(fps) {
     self.fpsInterval = 1000 / fps;
     self.then = Date.now();
     self.startTime = self.then;
-    console.log(self.startTime);
+
     animateV2();
 }
 
@@ -258,7 +283,25 @@ function animateMy3D(){
             break;
         default:
             if((self.cube.currentRotation !== ""&&self.play)||self.oneMove||self.oneMoveBack){
+                if(self.cube.nextRotationPerFrame!==self.cube.rotationPerFrame){
+                    self.cube.rotationPerFrame=self.cube.nextRotationPerFrame
+                }
+                if(self.play&&self.cube.rotationPerFrame>=10){
+
+                    if(self.audio.paused){
+                        self.audio.play();
+                        self.audio.loop
+                    }
+
+                }else{
+                    var audio = new Audio('./audios/rotation1.mp3');
+                    self.audio.pause()
+                    audio.play();
+                }
+
                 self.case=0
+            }else{
+                self.audio.pause()
             }
             break;
     }
@@ -296,7 +339,6 @@ function rotateAllCube(num){
             self.cube.currentRotation = "L1L1"
             break;
     }
-    self.shuffle = true
 }
 
 
@@ -538,7 +580,7 @@ function animate3D(){
                 if(self.cube.currentRotation === ""){
                     //get suggestion after shuffle
                     editSuggestion()
-                    self.shuffle=false
+                    //self.shuffle=false
                 }
             }
             if(self.cube.currentRotation === ""){

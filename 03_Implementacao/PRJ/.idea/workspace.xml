@@ -27,6 +27,10 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\fafito\Documents\Projeto\Three\js\stages" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\fafito\Documents\Projeto\FINAL\03_Implementacao\PRJ\audios" />
+      <recent name="C:\Users\fafito\Documents\Projeto\FINAL\03_Implementacao\PRJ\ audios" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/camera.html/index.html?_ij_reload" useBuiltInWebServerPort="true">
@@ -80,7 +84,12 @@
       <workItem from="1632479213635" duration="3181000" />
       <workItem from="1632691380231" duration="711000" />
       <workItem from="1632999745618" duration="8533000" />
-      <workItem from="1633013121257" duration="1007000" />
+      <workItem from="1633013121257" duration="2521000" />
+      <workItem from="1633094785547" duration="10292000" />
+      <workItem from="1633287696830" duration="93000" />
+      <workItem from="1633295052633" duration="262000" />
+      <workItem from="1634335420726" duration="413000" />
+      <workItem from="1634947364848" duration="819000" />
     </task>
     <servers />
   </component>

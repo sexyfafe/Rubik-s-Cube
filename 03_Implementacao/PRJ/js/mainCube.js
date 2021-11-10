@@ -21,7 +21,7 @@ function main(){
 
     const img = document.getElementById("myImg");
     img.onclick = function(){
-        if(self.pathImageFormula != "")
+        if(self.pathImageFormula !== "")
             showImage(self.pathImageFormula);
     }
     document.getElementById("myImg").style.display = "none";
@@ -34,40 +34,61 @@ function main(){
 
     self.canvas = document.getElementById('canvas2DCube');
     self.canvas.addEventListener('click', function(e){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation += self.cube2d.mousePressedImage(e)
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.cube2d.mousePressedImage(e)
+            let rotation2 = rotateAllCube(self.cube2d.mousePressCenterPiece(e))
 
-            let rotation = self.cube2d.mousePressCenterPiece(e);
-            rotateAllCube(rotation)
+
+
+            if(!(rotation1==="")){
+                self.cube.currentRotation += rotation1
+                self.cube.currentRotationArray.push([rotation1,0])
+            }else if(!(rotation2==="")){
+                self.cube.currentRotation =rotation2
+                self.cube.currentRotationArray.push([rotation2,0])
+
+            }
+
+
+
+
 
         }
     }, false)
 
 
     document.getElementById("ResolucaoAutomaticaTerceiraCamada").addEventListener("click", function(){
-        if(self.cube.currentRotation === ""){
-            self.cube.currentRotation = self.stage3Config.Complete(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0){
+            let rotation1 =  self.stage3Config.Complete(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
     document.getElementById("ResolucaoAutomaticaSegundaCamada").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage2Config.Complete(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage2Config.Complete(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
 
     document.getElementById("ResolucaoAutomaticaPrimeiraCamada").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage1Config.Complete(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage1Config.Complete(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
 
     document.getElementById("generateRandomRotation").addEventListener("click", function(){
-        if(self.cube.currentRotation !== ""){
-            self.cube.currentRotation = self.cube.currentRotation.slice(0, 2);
-            self.cube.currentRotation += getRandomRotation(15)
-        }else{
-            self.cube.currentRotation = getRandomRotation(15)
+        let rotation1 =""
+        if(self.cube.currentRotationArray.length !== 0){
+            rotation1 =  self.cube.currentRotation.slice(0, 2)
         }
+        rotation1+=getRandomRotation(15)
+
+        self.cube.currentRotation = rotation1
+        self.cube.currentRotationArray.push([rotation1,0])
     });
     document.getElementById("SolveBack").addEventListener("click", function(){
         self.oneMoveBack=true
@@ -92,45 +113,61 @@ function main(){
         }
     });
     document.getElementById("ResolucaoAutomaticaFase1").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage1Config.AutoCruz(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage1Config.AutoCruz(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase2").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage1Config.AutoCorners(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage1Config.AutoCorners(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase3").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage2Config.Complete(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage2Config.Complete(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase4").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage3Config.cruz(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage3Config.cruz(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase5").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage3Config.alinharCruz(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage3Config.alinharCruz(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase6").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage3Config.cantoCorreto(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage3Config.cantoCorreto(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase7").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage3Config.rotateCorners(self.matrixCube.getStates().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage3Config.rotateCorners(self.matrixCube.getStates().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
         }
     });
     document.getElementById("ResolucaoAutomatica").addEventListener("click", function(){
-        if(self.cube.currentRotation === "") {
-            self.cube.currentRotation = self.stage1Config.Complete(self.matrixCube.getStates().slice())
-            self.cube.currentRotation += self.stage2Config.Complete(self.stage1Config.getEstado().slice())
-            self.cube.currentRotation += self.stage3Config.Complete(self.stage2Config.getEstado().slice())
+        if(self.cube.currentRotationArray.length === 0) {
+            let rotation1 =  self.stage1Config.Complete(self.matrixCube.getStates().slice())
+            rotation1 += self.stage2Config.Complete(self.stage1Config.getEstado().slice())
+            rotation1 += self.stage3Config.Complete(self.stage2Config.getEstado().slice())
+            self.cube.currentRotation = rotation1
+            self.cube.currentRotationArray.push([rotation1,0])
             disableall()
         }
     });
@@ -151,7 +188,7 @@ function main(){
 
             //disableButton("ResolucaoAutomaticaFase1", "imageStep1", true)
         }
-        if(self.cube.currentRotation === ""){
+        if(self.cube.currentRotationArray.length === 0){
             //get suggestion after shuffle
             editSuggestion()
         }
@@ -196,6 +233,7 @@ function startAnimating(fps) {
     self.startTime = self.then;
 
     animateV2();
+
 }
 
 function animateV2() {
@@ -270,6 +308,21 @@ function animateMy3D(){
                 self.matrixCube.checkRotation(self.cube.currentRotation.slice(0, 2));
                 self.cube.currentRotationBack+=invertRotation(self.cube.currentRotation.slice(0, 2))
                 self.cube.currentRotation = self.cube.currentRotation.slice(2);
+
+                if(self.cube.currentRotationArray[0][0].length>self.cube.currentRotationArray[0][1]+2){
+                    self.cube.currentRotationArray[0][1] = self.cube.currentRotationArray[0][1]+2
+                }else{
+                    self.cube.currentRotationBackArray.push([invertRotationFull(self.cube.currentRotationArray[0][0]),0])
+                    self.cube.currentRotationArray = self.cube.currentRotationArray.slice(1)
+                }
+
+
+                console.log("AFTER")
+                console.log(self.cube.currentRotationArray)
+                console.log(self.cube.currentRotationBackArray)
+                console.log(self.cube.currentRotation)
+                console.log(self.cube.currentRotationBack)
+
                 self.cube.amountAlreadyRotated = 0;
             }
             self.oneMoveBack=false
@@ -282,7 +335,8 @@ function animateMy3D(){
 
             break;
         default:
-            if((self.cube.currentRotation !== ""&&self.play)||self.oneMove||self.oneMoveBack){
+            if((self.cube.currentRotationArray.length !== 0&&self.play)||self.oneMove||self.oneMoveBack){
+
                 if(self.cube.nextRotationPerFrame!==self.cube.rotationPerFrame){
                     self.cube.rotationPerFrame=self.cube.nextRotationPerFrame
                 }
@@ -324,20 +378,17 @@ function draw2D(){
 function rotateAllCube(num){
     switch(num){
         case 0:
-            self.cube.currentRotation = "F1"
-            break;
+            return "F1"
         case 2:
-            self.cube.currentRotation = "L2"
-            break;
+            return "L2"
         case 3:
-            self.cube.currentRotation = "L1"
-            break;
+            return "L1"
         case 4:
-            self.cube.currentRotation = "B1"
-            break;
+            return "B1"
         case 5:
-            self.cube.currentRotation = "L1L1"
-            break;
+            return "L1L1"
+        default:
+            return""
     }
 }
 
@@ -502,6 +553,16 @@ function checkRotation(type){
         self.cube.rotateAllFacesSideWays(true);
     else if("S2" === type)
         self.cube.rotateAllFacesSideWays(false);
+}
+
+function invertRotationFull(string){
+    let original = string
+    let final = ""
+    while(original!==""){
+        final += invertRotation(original.slice(0,2))
+        original = original.slice(2,original.length)
+    }
+    return final
 }
 function invertRotation(type){
     if("LF" === type)

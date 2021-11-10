@@ -213,6 +213,8 @@ class Cube2D{
             if(this.images[i].checkIfIsInside(x, y))
                 return this.images[i].getOperation();
 
+        return ""
+
     }
 
     mousePressedSquare(event){

@@ -9,6 +9,8 @@ export class Cube3D {
 
         this.currentRotation = "";
         this.currentRotationBack = "";
+        this.currentRotationArray = [];
+        this.currentRotationBackArray = [];
         this.amountAlreadyRotated = 0;
         this.rotationPerFrame = 5;
         this.nextRotationPerFrame = 5

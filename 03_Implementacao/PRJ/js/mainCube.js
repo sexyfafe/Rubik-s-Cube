@@ -38,8 +38,6 @@ function main(){
             let rotation1 =  self.cube2d.mousePressedImage(e)
             let rotation2 = rotateAllCube(self.cube2d.mousePressCenterPiece(e))
 
-
-
             if(!(rotation1==="")){
                 self.cube.currentRotation += rotation1
                 self.cube.currentRotationArray.push([rotation1,0])
@@ -114,14 +112,19 @@ function main(){
     });
     document.getElementById("ResolucaoAutomaticaFase1").addEventListener("click", function(){
         if(self.cube.currentRotationArray.length === 0) {
-            let rotation1 =  self.stage1Config.AutoCruz(self.matrixCube.getStates().slice())
+            let fase1 = self.stage1Config.AutoCruz(self.matrixCube.getStates().slice())
+            let rotation1 =  fase1[0]
             self.cube.currentRotation = rotation1
             self.cube.currentRotationArray.push([rotation1,0])
+            console.log("Testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            console.log(fase1[0])
+            console.log(fase1[1])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase2").addEventListener("click", function(){
         if(self.cube.currentRotationArray.length === 0) {
-            let rotation1 =  self.stage1Config.AutoCorners(self.matrixCube.getStates().slice())
+            let fase1 = self.stage1Config.AutoCorners(self.matrixCube.getStates().slice())
+            let rotation1 =  fase1[0]
             self.cube.currentRotation = rotation1
             self.cube.currentRotationArray.push([rotation1,0])
         }
@@ -317,11 +320,6 @@ function animateMy3D(){
                 }
 
 
-                console.log("AFTER")
-                console.log(self.cube.currentRotationArray)
-                console.log(self.cube.currentRotationBackArray)
-                console.log(self.cube.currentRotation)
-                console.log(self.cube.currentRotationBack)
 
                 self.cube.amountAlreadyRotated = 0;
             }
@@ -618,13 +616,11 @@ function animate3D(){
                 checkRotation(self.cube.currentRotationBack.slice((self.cube.currentRotationBack.length-2), (self.cube.currentRotationBack.length)));
             }else {
                 checkRotation(self.cube.currentRotation.slice(0, 2));
-                console.log("AQUI")
             }
             self.cube.amountAlreadyRotated += self.cube.rotationPerFrame;
         }
         else{
             if(self.oneMoveBack){
-                console.log("AQUI2")
                 self.oneMoveBack=false
                 self.oneMove=false
                 self.matrixCube.checkRotation(self.cube.currentRotationBack.slice((self.cube.currentRotationBack.length-2), (self.cube.currentRotationBack.length)));
@@ -632,7 +628,6 @@ function animate3D(){
                 self.cube.currentRotationBack=self.cube.currentRotationBack.slice(0, self.cube.currentRotationBack.length-2)
                 self.cube.amountAlreadyRotated = 0;
             }else{
-                console.log("AQUI3")
                 self.oneMove=false
                 self.matrixCube.checkRotation(self.cube.currentRotation.slice(0, 2));
                 self.cube.currentRotationBack+=invertRotation(self.cube.currentRotation.slice(0, 2))

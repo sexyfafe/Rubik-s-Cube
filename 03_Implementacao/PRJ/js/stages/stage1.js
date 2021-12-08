@@ -10,10 +10,15 @@ class Stage1 {
 
         var stringText = ""
         var cruz = this.AutoCruz(this.estado)
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        console.log(cruz[0])
+        console.log(cruz[1])
         var corners = this.AutoCorners(this.estado)
-        if(cruz!=="erro" && corners!=="erro"){
-            stringText+=cruz
-            stringText+=corners
+        console.log(corners[0])
+        console.log(corners[1])
+        if(cruz[0]!=="erro" && corners[0]!=="erro"){
+            stringText+=cruz[0]
+            stringText+=corners[0]
         }else{
             stringText="erro"
         }
@@ -42,15 +47,26 @@ class Stage1 {
             (this.estado[4][4]===this.estado[4][1]&&this.estado[4][4]===this.estado[4][3]&&this.estado[4][4]===this.estado[4][5]&&this.estado[4][4]===this.estado[4][7])){
             return ""
         }
+        var arrayState =[]
         var stringText = ""
-        stringText += this.CalcPointsCross()
-        stringText += this.RemoveWrongCross()
+        var calcPointsCross =this.CalcPointsCross()
+        var removeWrongCross = this.RemoveWrongCross()
+        if(calcPointsCross!==""){arrayState.push([calcPointsCross,0])}
+        if(removeWrongCross!==""){arrayState.push([removeWrongCross,0])}
+
+        stringText += calcPointsCross
+        stringText += removeWrongCross
+
         var completed= false
         for (var j = 0; j < 30; j++) {
             if (!((this.estado[1][1] === this.estado[1][4]) && (this.estado[1][3] === this.estado[1][4])
                 && (this.estado[1][5] === this.estado[1][4]) && (this.estado[1][7] === this.estado[1][4]))) {
-                stringText += this.getPiceFromUnder()
-                stringText += this.getPiceFromSide()
+                var getPiceFromUnder =this.getPiceFromUnder()
+                var getPiceFromSide =this.getPiceFromSide()
+                if(getPiceFromUnder!==""){arrayState.push([getPiceFromUnder,0])}
+                if(getPiceFromSide!==""){arrayState.push([getPiceFromSide,0])}
+                stringText += getPiceFromUnder
+                stringText += getPiceFromSide
             }else{
                 completed=true
                 break
@@ -58,13 +74,16 @@ class Stage1 {
         }
         //this.debugHelper()
         if(completed)
-            return stringText
+            return [stringText,arrayState]
         else
-            return "erro"
+            return ["erro"]
     }
 
     AutoCorners(MatrixCubeState) {
+
         this.estado = [MatrixCubeState[0].slice(), MatrixCubeState[1].slice(), MatrixCubeState[2].slice(), MatrixCubeState[3].slice(), MatrixCubeState[4].slice(), MatrixCubeState[5].slice()]
+        var arrayState =[]
+
 
         var stringText = ""
         var rotation=""
@@ -78,7 +97,7 @@ class Stage1 {
         }else{
             return ""
         }
-
+        if(stringText!==""){arrayState.push([stringText,0])}
         //this.debugHelper()
         var completed= false
         for (var j = 0; j < 30; j++) {
@@ -88,8 +107,18 @@ class Stage1 {
                 this.estado[2][4] === this.estado[2][8] && this.estado[2][4] === this.estado[2][6] &&
                 this.estado[3][4] === this.estado[3][8] && this.estado[3][4] === this.estado[3][6] &&
                 this.estado[5][4] === this.estado[5][8] && this.estado[5][4] === this.estado[5][6])){
-                stringText +=rotation+ this.SolveCorners()
+                var cornerString=this.SolveCorners()
+                stringText +=rotation
+                if(rotation!==""){arrayState.push([rotation,0])}
+                if(cornerString[0]!==""){
+                    stringText +=cornerString[0]
+                    console.log(cornerString[0])
+                    Array.prototype.push.apply(arrayState, cornerString[1]);
+
+
+                }
                 rotation="L1"
+
                 this.estado=this.newMatrix.setRightMainFaceIn(this.estado)
             }else{
                 this.estado=this.newMatrix.setLeftMainFaceIn(this.estado)
@@ -98,9 +127,9 @@ class Stage1 {
             }
         }
         if(completed)
-            return stringText
+            return [stringText,arrayState]
         else
-            return "erro"
+            return ["erro"]
     }
 
     debugHelper() {
@@ -114,15 +143,18 @@ class Stage1 {
     }
 
     SolveCorners() {
+        var arrayState =[]
         var selected = ""
         if (this.estado[4][4] === this.estado[1][8] || this.estado[4][4] === this.estado[3][6] || this.estado[4][4] === this.estado[4][2]) {
             if (this.estado[1][4] === this.estado[1][8] || this.estado[1][4] === this.estado[3][6] || this.estado[1][4] === this.estado[4][2]) {
                 if (this.estado[3][4] === this.estado[1][8] || this.estado[3][4] === this.estado[3][6] || this.estado[3][4] === this.estado[4][2]) {
                     for (var j = 0; j < 30; j++) {
                         if(!(this.estado[4][4] === this.estado[4][2] && this.estado[1][4] === this.estado[1][8] && this.estado[3][4] === this.estado[3][6])){
-                            selected += this.formula1()
+                            var formula = this.formula1()
+                            selected += formula
+                            if(formula!==""){arrayState.push([formula,0])}
                         }else{
-                            return selected
+                            return [selected,arrayState]
                         }
                     }
                 }
@@ -136,28 +168,33 @@ class Stage1 {
                     if (this.estado[3][4] === this.estado[0][8] || this.estado[3][4] === this.estado[1][2] || this.estado[3][4] === this.estado[3][0]) {
                         for (var j = 0; j < 30; j++) {
                             if(!(this.estado[4][4] === this.estado[4][2] && this.estado[1][4] === this.estado[1][8] && this.estado[3][4] === this.estado[3][6])){
-                                selected += this.formula1()
+                                var formula = this.formula1()
+                                selected += formula
+                                if(formula!==""){arrayState.push([formula,0])}
                             }else{
-                                return selected
+                                return [selected,arrayState]
                             }
                         }
                     }
                 }
             }
             selected += "TR"
+            arrayState.push(["TR",0])
             this.estado = this.newMatrix.moveUBackIn(this.estado)
         }
         selected = ""
-
+        var arrayState =[]
         if (this.estado[4][4] === this.estado[4][2] || this.estado[4][4] === this.estado[1][8] || this.estado[4][4] === this.estado[3][6]) {
             for (var j = 0; j < 4; j++) {
                 if (!(this.estado[4][4] === this.estado[0][8] || this.estado[4][4] === this.estado[1][2] || this.estado[4][4] === this.estado[3][0])) {
-                    selected += this.formula1()
-                    return selected
+                    var formula = this.formula1()
+                    selected += formula
+                    if(formula!==""){arrayState.push([formula,0])}
+                    return [selected,arrayState]
                 }
             }
         }
-        return ""
+        return [""]
     }
 
 

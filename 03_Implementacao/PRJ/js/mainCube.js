@@ -116,7 +116,6 @@ function main(){
             let rotation1 =  fase1[0]
             self.cube.currentRotation = rotation1
             self.cube.currentRotationArray.push([rotation1,0])
-            console.log("Testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
             console.log(fase1[0])
             console.log(fase1[1])
         }
@@ -127,13 +126,18 @@ function main(){
             let rotation1 =  fase1[0]
             self.cube.currentRotation = rotation1
             self.cube.currentRotationArray.push([rotation1,0])
+            console.log(fase1[0])
+            console.log(fase1[1])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase3").addEventListener("click", function(){
         if(self.cube.currentRotationArray.length === 0) {
-            let rotation1 =  self.stage2Config.Complete(self.matrixCube.getStates().slice())
+            let fase1 = self.stage2Config.CompleteTest(self.matrixCube.getStates().slice())
+            let rotation1 =  fase1[0]
             self.cube.currentRotation = rotation1
             self.cube.currentRotationArray.push([rotation1,0])
+            console.log(fase1[0])
+            console.log(fase1[1])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase4").addEventListener("click", function(){

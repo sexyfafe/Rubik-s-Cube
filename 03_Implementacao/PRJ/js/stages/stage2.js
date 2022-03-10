@@ -11,10 +11,64 @@ class Stage2{
         stringText+=this.segundaCamadaV2()
         return stringText
     }
+    CompleteTest(MatrixCubeState){
+        this.estado = [MatrixCubeState[0].slice(), MatrixCubeState[1].slice(), MatrixCubeState[2].slice(), MatrixCubeState[3].slice(), MatrixCubeState[4].slice(), MatrixCubeState[5].slice()]
+        return this.segundaCamadaV3()
+    }
     getEstado(){
         return this.estado.slice()
     }
+    segundaCamadaV3(){
+        var completed= false
+        var arrayState =[]
+        var stringText = ""
+        if(!(this.estado[4][4]===this.estado[4][0]&&this.estado[4][4]===this.estado[4][1]&&this.estado[4][4]===this.estado[4][2]&&
+            this.estado[4][4]===this.estado[4][3]&&this.estado[4][4]===this.estado[4][4]&&this.estado[4][4]===this.estado[4][5]&&
+            this.estado[4][4]===this.estado[4][6]&&this.estado[4][4]===this.estado[4][7]&&this.estado[4][4]===this.estado[4][8]&&
 
+            this.estado[1][4]===this.estado[1][6]&&
+            this.estado[1][4]===this.estado[1][7]&&this.estado[1][4]===this.estado[1][8]&&
+
+            this.estado[2][4]===this.estado[2][6]&&
+            this.estado[2][4]===this.estado[2][7]&&this.estado[2][4]===this.estado[2][8]&&
+
+            this.estado[3][4]===this.estado[3][6]&&
+            this.estado[3][4]===this.estado[3][7]&&this.estado[3][4]===this.estado[3][8]&&
+
+            this.estado[5][4]===this.estado[5][6]&&
+            this.estado[5][4]===this.estado[5][7]&&this.estado[5][4]===this.estado[5][8])){
+            completed=true
+        }
+        if(!completed){
+            for (var j = 0; j < 30; j++) {
+                if(!((this.estado[1][4] === this.estado[1][5]&&this.estado[1][4] === this.estado[1][3])&&
+                    (this.estado[2][4] === this.estado[2][5]&&this.estado[2][4] === this.estado[2][3])&&
+                    (this.estado[3][4] === this.estado[3][5]&&this.estado[3][4] === this.estado[3][3])&&
+                    (this.estado[5][4] === this.estado[5][5]&&this.estado[5][4] === this.estado[5][3]))){
+                    if(((this.estado[0][4] === this.estado[0][1]||this.estado[0][4] === this.estado[5][1])
+                        &&(this.estado[0][4] === this.estado[0][3]||this.estado[0][4] === this.estado[2][1])
+                        &&(this.estado[0][4] === this.estado[0][5]||this.estado[0][4] === this.estado[3][1])
+                        &&(this.estado[0][4] === this.estado[0][7]||this.estado[0][4] === this.estado[1][1]))){
+
+                        var result=this.segundaCamadaRemove()
+                        stringText+=result[0]
+                    }
+                    var result=this.segundaCamadaAdd()
+                    stringText+=result[0]
+                }else{
+                    completed=true
+                    break
+                }
+            }
+        }
+        console.log(completed)
+        if(completed)
+            return [stringText,arrayState]
+        else
+            return ["erro"]
+
+
+    }
     segundaCamadaV2(){
         var stringText = ""
         if(!(this.estado[4][4]===this.estado[4][0]&&this.estado[4][4]===this.estado[4][1]&&this.estado[4][4]===this.estado[4][2]&&
@@ -43,9 +97,9 @@ class Stage2{
                     &&(this.estado[0][4] === this.estado[0][3]||this.estado[0][4] === this.estado[2][1])
                     &&(this.estado[0][4] === this.estado[0][5]||this.estado[0][4] === this.estado[3][1])
                     &&(this.estado[0][4] === this.estado[0][7]||this.estado[0][4] === this.estado[1][1]))){
-                    stringText+=this.segundaCamadaRemove()
+                    stringText+=this.segundaCamadaRemove()[0]
                 }
-                stringText+=this.segundaCamadaAdd()
+                stringText+=this.segundaCamadaAdd()[0]
             }else{
                 return stringText
             }
@@ -55,28 +109,35 @@ class Stage2{
 
     }
     segundaCamadaAdd(){
+        var arrayState =[]
         var stringText = ""
         for (var j = 0; j < 4; j++) {
             //Insert Left
             if((this.estado[1][4] === this.estado[1][1]&&(this.estado[2][4] === this.estado[0][7]))){
                 stringText+=this.formula2()
+                arrayState.push([this.formula2(),0])
                 break
             }
             //Insert Right
             if((this.estado[1][4] === this.estado[1][1]&&(this.estado[3][4] === this.estado[0][7]))){
                 stringText+=this.formula1()
+                arrayState.push([this.formula1(),0])
                 break
             }
             this.estado = this.newMatrix.moveUBackIn(this.estado)
             stringText+="TR"
+            arrayState.push(["TR",0])
             if(j===3){
                 this.estado=this.newMatrix.setRightMainFaceIn(this.estado)
                 stringText+="L1"
+                arrayState.push(["L1",0])
+
             }
         }
-        return stringText
+        return [stringText, arrayState]
     }
     segundaCamadaRemove(){
+        var arrayState =[]
         var stringText = ""
         for (var j = 0; j < 4; j++) {
             //Remove Left
@@ -84,6 +145,7 @@ class Stage2{
                 (this.estado[0][4] === this.estado[0][7]||this.estado[0][4] === this.estado[1][1]))&&
                 !(this.estado[1][4] === this.estado[1][3]&&this.estado[2][4] === this.estado[2][5])){
                 stringText+=this.formula2()
+                arrayState.push([this.formula2(),0])
                 break
             }
             //Remove RIGHT
@@ -91,16 +153,19 @@ class Stage2{
                 (this.estado[0][4] === this.estado[0][7]||this.estado[0][4] === this.estado[1][1]))&&
                 !(this.estado[1][4] === this.estado[1][3]&&this.estado[3][4] === this.estado[3][3])){
                 stringText+=this.formula1()
+                arrayState.push([this.formula1(),0])
                 break
             }
             this.estado = this.newMatrix.moveUBackIn(this.estado)
             stringText+="TR"
+            arrayState.push(["TR",0])
             if(j===3){
                 this.estado=this.newMatrix.setRightMainFaceIn(this.estado)
                 stringText+="L1"
+                arrayState.push(["L1",0])
             }
         }
-        return stringText
+        return [stringText,arrayState]
     }
     segundaCamadaV1(){
         var stringText = ""

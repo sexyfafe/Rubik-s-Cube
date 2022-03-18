@@ -9,11 +9,13 @@ class Stage2{
 
         var stringText = ""
         stringText+=this.segundaCamadaV2()
-        return stringText
+
+        return [stringText,[]]
     }
     CompleteTest(MatrixCubeState){
         this.estado = [MatrixCubeState[0].slice(), MatrixCubeState[1].slice(), MatrixCubeState[2].slice(), MatrixCubeState[3].slice(), MatrixCubeState[4].slice(), MatrixCubeState[5].slice()]
-        return this.segundaCamadaV3()
+        var resposta=this.segundaCamadaV3()
+        return resposta
     }
     getEstado(){
         return this.estado.slice()
@@ -52,9 +54,11 @@ class Stage2{
 
                         var result=this.segundaCamadaRemove()
                         stringText+=result[0]
+                        Array.prototype.push.apply(arrayState, result[1]);
                     }
                     var result=this.segundaCamadaAdd()
                     stringText+=result[0]
+                    Array.prototype.push.apply(arrayState, result[1]);
                 }else{
                     completed=true
                     break
@@ -109,19 +113,21 @@ class Stage2{
 
     }
     segundaCamadaAdd(){
-        var arrayState =[]
         var stringText = ""
+        var arrayState =[]
         for (var j = 0; j < 4; j++) {
             //Insert Left
             if((this.estado[1][4] === this.estado[1][1]&&(this.estado[2][4] === this.estado[0][7]))){
-                stringText+=this.formula2()
-                arrayState.push([this.formula2(),0])
+                var tempVar = this.formula2()
+                stringText+=tempVar
+                arrayState.push([tempVar,0])
                 break
             }
             //Insert Right
             if((this.estado[1][4] === this.estado[1][1]&&(this.estado[3][4] === this.estado[0][7]))){
-                stringText+=this.formula1()
-                arrayState.push([this.formula1(),0])
+                var tempVar = this.formula1()
+                stringText+=tempVar
+                arrayState.push([tempVar,0])
                 break
             }
             this.estado = this.newMatrix.moveUBackIn(this.estado)
@@ -131,29 +137,32 @@ class Stage2{
                 this.estado=this.newMatrix.setRightMainFaceIn(this.estado)
                 stringText+="L1"
                 arrayState.push(["L1",0])
-
             }
         }
         return [stringText, arrayState]
     }
+
+
     segundaCamadaRemove(){
-        var arrayState =[]
         var stringText = ""
+        var arrayState =[]
         for (var j = 0; j < 4; j++) {
             //Remove Left
             if((!(this.estado[0][4] === this.estado[1][3]||this.estado[0][4] === this.estado[2][5])&&
-                (this.estado[0][4] === this.estado[0][7]||this.estado[0][4] === this.estado[1][1]))&&
+                    (this.estado[0][4] === this.estado[0][7]||this.estado[0][4] === this.estado[1][1]))&&
                 !(this.estado[1][4] === this.estado[1][3]&&this.estado[2][4] === this.estado[2][5])){
-                stringText+=this.formula2()
-                arrayState.push([this.formula2(),0])
+                var tempVar = this.formula2()
+                stringText+=tempVar
+                arrayState.push([tempVar,0])
                 break
             }
             //Remove RIGHT
             if((!(this.estado[0][4] === this.estado[1][5]||this.estado[0][4] === this.estado[3][3])&&
-                (this.estado[0][4] === this.estado[0][7]||this.estado[0][4] === this.estado[1][1]))&&
+                    (this.estado[0][4] === this.estado[0][7]||this.estado[0][4] === this.estado[1][1]))&&
                 !(this.estado[1][4] === this.estado[1][3]&&this.estado[3][4] === this.estado[3][3])){
-                stringText+=this.formula1()
-                arrayState.push([this.formula1(),0])
+                var tempVar = this.formula1()
+                stringText+=tempVar
+                arrayState.push([tempVar,0])
                 break
             }
             this.estado = this.newMatrix.moveUBackIn(this.estado)
@@ -165,8 +174,9 @@ class Stage2{
                 arrayState.push(["L1",0])
             }
         }
-        return [stringText,arrayState]
+        return [stringText, arrayState]
     }
+
     segundaCamadaV1(){
         var stringText = ""
         for (var j = 0; j < 4; j++) {

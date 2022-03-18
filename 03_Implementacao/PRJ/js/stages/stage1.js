@@ -10,12 +10,7 @@ class Stage1 {
 
         var stringText = ""
         var cruz = this.AutoCruz(this.estado)
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-        console.log(cruz[0])
-        console.log(cruz[1])
         var corners = this.AutoCorners(this.estado)
-        console.log(corners[0])
-        console.log(corners[1])
         if(cruz[0]!=="erro" && corners[0]!=="erro"){
             stringText+=cruz[0]
             stringText+=corners[0]
@@ -83,7 +78,7 @@ class Stage1 {
 
         this.estado = [MatrixCubeState[0].slice(), MatrixCubeState[1].slice(), MatrixCubeState[2].slice(), MatrixCubeState[3].slice(), MatrixCubeState[4].slice(), MatrixCubeState[5].slice()]
         var arrayState =[]
-
+        var completed= false
 
         var stringText = ""
         var rotation=""
@@ -95,40 +90,44 @@ class Stage1 {
             stringText += "F1"
             this.estado = this.newMatrix.setTopMainFaceIn(this.estado)
         }else{
-            return ""
+            completed=true
         }
-        if(stringText!==""){arrayState.push([stringText,0])}
+
         //this.debugHelper()
-        var completed= false
-        for (var j = 0; j < 30; j++) {
-            if(!(this.estado[4][4] === this.estado[4][1] && this.estado[4][4] === this.estado[4][3] &&
-                this.estado[4][4] === this.estado[4][5] && this.estado[4][4] === this.estado[4][7] &&
-                this.estado[1][4] === this.estado[1][8] && this.estado[1][4] === this.estado[1][6] &&
-                this.estado[2][4] === this.estado[2][8] && this.estado[2][4] === this.estado[2][6] &&
-                this.estado[3][4] === this.estado[3][8] && this.estado[3][4] === this.estado[3][6] &&
-                this.estado[5][4] === this.estado[5][8] && this.estado[5][4] === this.estado[5][6])){
-                var cornerString=this.SolveCorners()
-                stringText +=rotation
-                if(rotation!==""){arrayState.push([rotation,0])}
-                if(cornerString[0]!==""){
-                    stringText +=cornerString[0]
-                    console.log(cornerString[0])
-                    Array.prototype.push.apply(arrayState, cornerString[1]);
+        if(!completed){
+            if(stringText!==""){arrayState.push([stringText,0])}
+            for (var j = 0; j < 30; j++) {
+                if(!(this.estado[4][4] === this.estado[4][1] && this.estado[4][4] === this.estado[4][3] &&
+                    this.estado[4][4] === this.estado[4][5] && this.estado[4][4] === this.estado[4][7] &&
+                    this.estado[1][4] === this.estado[1][8] && this.estado[1][4] === this.estado[1][6] &&
+                    this.estado[2][4] === this.estado[2][8] && this.estado[2][4] === this.estado[2][6] &&
+                    this.estado[3][4] === this.estado[3][8] && this.estado[3][4] === this.estado[3][6] &&
+                    this.estado[5][4] === this.estado[5][8] && this.estado[5][4] === this.estado[5][6])){
+                    var cornerString=this.SolveCorners()
+                    stringText +=rotation
+                    if(rotation!==""){arrayState.push([rotation,0])}
+                    if(cornerString[0]!==""){
+                        stringText +=cornerString[0]
+                        console.log(cornerString[0])
+                        Array.prototype.push.apply(arrayState, cornerString[1]);
 
 
+                    }
+                    rotation="L1"
+
+                    this.estado=this.newMatrix.setRightMainFaceIn(this.estado)
+                }else{
+                    this.estado=this.newMatrix.setLeftMainFaceIn(this.estado)
+                    completed=true
+                    break
                 }
-                rotation="L1"
-
-                this.estado=this.newMatrix.setRightMainFaceIn(this.estado)
-            }else{
-                this.estado=this.newMatrix.setLeftMainFaceIn(this.estado)
-                completed=true
-                break
             }
+
         }
-        if(completed)
-            return [stringText,arrayState]
-        else
+        if(completed) {
+            console.log("completed")
+            return [stringText, arrayState]
+        }else
             return ["erro"]
     }
 

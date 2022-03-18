@@ -22,6 +22,9 @@ class Stage3 {
     }
     rotateCorners(MatrixCubeState) {
         this.estado = [MatrixCubeState[0].slice(), MatrixCubeState[1].slice(), MatrixCubeState[2].slice(), MatrixCubeState[3].slice(), MatrixCubeState[4].slice(), MatrixCubeState[5].slice()]
+        var completed= false
+        var arrayState =[]
+        var stringText = ""
 
         if(!(this.estado[4][4]===this.estado[4][0]&&this.estado[4][4]===this.estado[4][1]&&this.estado[4][4]===this.estado[4][2]&&
             this.estado[4][4]===this.estado[4][3]&&this.estado[4][4]===this.estado[4][4]&&this.estado[4][4]===this.estado[4][5]&&
@@ -39,36 +42,50 @@ class Stage3 {
             this.estado[5][4]===this.estado[5][3]&&this.estado[5][4]===this.estado[5][5]&&this.estado[5][4]===this.estado[5][6]&&
             this.estado[5][4]===this.estado[5][7]&&this.estado[5][4]===this.estado[5][8]&&this.estado[5][4]===this.estado[5][1])){
 
-            return ""
+            completed=true
         }
 
-        var stringText = ""
-        stringText+="F1"
-        this.estado = this.newMatrix.setTopMainFaceIn(this.estado)
-        if(this.estado[0][4]===this.estado[0][0]&&this.estado[0][4]===this.estado[0][2]&&this.estado[0][4]===this.estado[0][6]&&this.estado[0][4]===this.estado[0][8]&&
-            this.estado[1][4]===this.estado[1][0]&&this.estado[1][4]===this.estado[1][2]&&this.estado[1][4]===this.estado[1][6]&&this.estado[1][4]===this.estado[1][8]&&
-            this.estado[2][4]===this.estado[2][0]&&this.estado[2][4]===this.estado[2][2]&&this.estado[2][4]===this.estado[2][6]&&this.estado[2][4]===this.estado[2][8]&&
-            this.estado[3][4]===this.estado[3][0]&&this.estado[3][4]===this.estado[3][2]&&this.estado[3][4]===this.estado[3][6]&&this.estado[3][4]===this.estado[3][8]&&
-            this.estado[4][4]===this.estado[4][0]&&this.estado[4][4]===this.estado[4][2]&&this.estado[4][4]===this.estado[4][6]&&this.estado[4][4]===this.estado[4][8]&&
-            this.estado[5][4]===this.estado[5][0]&&this.estado[5][4]===this.estado[5][2]&&this.estado[5][4]===this.estado[5][6]&&this.estado[5][4]===this.estado[5][8]){
-            return ""
+        if(!completed){
+            stringText+="F1"
+            arrayState.push(["F1",0])
+            this.estado = this.newMatrix.setTopMainFaceIn(this.estado)
+            if(this.estado[0][4]===this.estado[0][0]&&this.estado[0][4]===this.estado[0][2]&&this.estado[0][4]===this.estado[0][6]&&this.estado[0][4]===this.estado[0][8]&&
+                this.estado[1][4]===this.estado[1][0]&&this.estado[1][4]===this.estado[1][2]&&this.estado[1][4]===this.estado[1][6]&&this.estado[1][4]===this.estado[1][8]&&
+                this.estado[2][4]===this.estado[2][0]&&this.estado[2][4]===this.estado[2][2]&&this.estado[2][4]===this.estado[2][6]&&this.estado[2][4]===this.estado[2][8]&&
+                this.estado[3][4]===this.estado[3][0]&&this.estado[3][4]===this.estado[3][2]&&this.estado[3][4]===this.estado[3][6]&&this.estado[3][4]===this.estado[3][8]&&
+                this.estado[4][4]===this.estado[4][0]&&this.estado[4][4]===this.estado[4][2]&&this.estado[4][4]===this.estado[4][6]&&this.estado[4][4]===this.estado[4][8]&&
+                this.estado[5][4]===this.estado[5][0]&&this.estado[5][4]===this.estado[5][2]&&this.estado[5][4]===this.estado[5][6]&&this.estado[5][4]===this.estado[5][8]){
+                completed=true
+            }
+
         }
-        for (var j = 0; j < 4; j++) {
-            for (var i = 0; i < 30; i++) {
-                if(!(this.estado[1][4] === this.estado[1][2])){
-                    stringText+=this.formula4();
-                }else{
-                    stringText += "FR"
-                    this.estado = this.newMatrix.moveFIn(this.estado)
-                    break
+        if(!completed){
+            for (var j = 0; j < 4; j++) {
+                for (var i = 0; i < 30; i++) {
+                    if(!(this.estado[1][4] === this.estado[1][2])){
+                        var tempvar=this.formula4()
+                        stringText+=tempvar
+                        arrayState.push([tempvar,0])
+                    }else{
+                        stringText += "FR"
+                        arrayState.push(["FR",0])
+                        this.estado = this.newMatrix.moveFIn(this.estado)
+                        completed=true
+                        break
+                    }
                 }
             }
         }
-        return stringText
+        if(completed)
+            return [stringText,arrayState]
+        else
+            return ["erro"]
     }
     cantoCorreto(MatrixCubeState) {
         this.estado = [MatrixCubeState[0].slice(), MatrixCubeState[1].slice(), MatrixCubeState[2].slice(), MatrixCubeState[3].slice(), MatrixCubeState[4].slice(), MatrixCubeState[5].slice()]
 
+        var completed= false
+        var arrayState =[]
         var stringText = ""
 
         for (var j = 0; j < 30; j++) {
@@ -96,6 +113,7 @@ class Stage3 {
                     && ((this.estado[2][4] === this.estado[0][6]) || (this.estado[2][4] === this.estado[1][0]) || (this.estado[2][4] === this.estado[2][2]))) {
                     this.estado = this.newMatrix.setLeftMainFaceIn(this.estado)
                     stringText += "L2"
+                    arrayState.push(["L2",0])
 
                 }
                 //top Left
@@ -105,6 +123,8 @@ class Stage3 {
                     this.estado = this.newMatrix.setRightMainFaceIn(this.estado)
                     this.estado = this.newMatrix.setRightMainFaceIn(this.estado)
                     stringText += "L1L1"
+                    arrayState.push(["L1L1",0])
+
                 }
                 //top Right
                 else if (((this.estado[0][4] === this.estado[0][2]) || (this.estado[0][4] === this.estado[3][2]) || (this.estado[0][4] === this.estado[5][0]))
@@ -112,13 +132,20 @@ class Stage3 {
                     && ((this.estado[5][4] === this.estado[0][2]) || (this.estado[5][4] === this.estado[3][2]) || (this.estado[5][4] === this.estado[5][0]))) {
                     this.estado = this.newMatrix.setRightMainFaceIn(this.estado)
                     stringText += "L1"
+                    arrayState.push(["L1",0])
                 }
-                stringText +=this.formula3();
+                var tempvar=this.formula3()
+                stringText+=tempvar
+                arrayState.push([tempvar,0])
             }else{
-                return stringText
+                completed=true
+                break
             }
         }
-        return "erro"
+        if(completed)
+            return [stringText,arrayState]
+        else
+            return ["erro"]
     }
 
 
@@ -126,6 +153,8 @@ class Stage3 {
     alinharCruz(MatrixCubeState) {
         this.estado = [MatrixCubeState[0].slice(), MatrixCubeState[1].slice(), MatrixCubeState[2].slice(), MatrixCubeState[3].slice(), MatrixCubeState[4].slice(), MatrixCubeState[5].slice()]
 
+        var completed= false
+        var arrayState =[]
         var stringText = ""
 
         for (var j = 0; j < 30; j++) {
@@ -134,29 +163,42 @@ class Stage3 {
                     this.estado = this.newMatrix.moveUIn(this.estado)
                     this.estado = this.newMatrix.moveUIn(this.estado)
                     stringText += "TLTL"
+                    arrayState.push(["TLTL",0])
                 } else {
                     this.estado = this.newMatrix.moveUIn(this.estado)
                     stringText += "TL"
+                    arrayState.push(["TL",0])
                 }
-                stringText += this.formula2();
+                var tempvar=this.formula2()
+                stringText+=tempvar
+                arrayState.push([tempvar,0])
 
                 for (var i = 0; i < 30; i++) {
                     if(!(this.estado[1][1] === this.estado[1][4])){
                         this.estado = this.newMatrix.moveUIn(this.estado)
                         stringText += "TL"
+                        arrayState.push(["TL",0])
                     }else{
                         break
                     }
                 }
             }else{
-                return stringText
+                completed=true
+                break
             }
         }
-        return "erro"
+
+        if(completed)
+            return [stringText,arrayState]
+        else
+            return ["erro"]
     }
 
     cruz(MatrixCubeState) {
         this.estado = [MatrixCubeState[0].slice(), MatrixCubeState[1].slice(), MatrixCubeState[2].slice(), MatrixCubeState[3].slice(), MatrixCubeState[4].slice(), MatrixCubeState[5].slice()]
+        var completed= false
+        var arrayState =[]
+        var stringText = ""
 
         if(!(this.estado[4][4]===this.estado[4][0]&&this.estado[4][4]===this.estado[4][1]&&this.estado[4][4]===this.estado[4][2]&&
             this.estado[4][4]===this.estado[4][3]&&this.estado[4][4]===this.estado[4][4]&&this.estado[4][4]===this.estado[4][5]&&
@@ -174,45 +216,57 @@ class Stage3 {
             this.estado[5][4]===this.estado[5][3]&&this.estado[5][4]===this.estado[5][5]&&this.estado[5][4]===this.estado[5][6]&&
             this.estado[5][4]===this.estado[5][7]&&this.estado[5][4]===this.estado[5][8])){
 
-            return ""
+            completed = true
         }
 
-        var stringText = ""
-
-        for (var j = 0; j < 30; j++) {
-            if(!(this.estado[0][4] === this.estado[0][1] && this.estado[0][4] === this.estado[0][3]
-                && this.estado[0][4] === this.estado[0][5] && this.estado[0][4] === this.estado[0][7])) {
-                if (this.estado[0][4] === this.estado[0][3] && this.estado[0][4] === this.estado[0][5]) {
-                } else if (this.estado[0][4] === this.estado[0][1] && this.estado[0][4] === this.estado[0][7]) {
-                    this.estado = this.newMatrix.moveUIn(this.estado)
-                    stringText += "TL"
-                } else if (this.estado[0][4] === this.estado[0][1] && this.estado[0][4] === this.estado[0][3]) {
-                } else if (this.estado[0][4] === this.estado[0][1] && this.estado[0][4] === this.estado[0][5]) {
-                    this.estado = this.newMatrix.moveUBackIn(this.estado)
-                    stringText += "TR"
-                } else if (this.estado[0][4] === this.estado[0][5] && this.estado[0][4] === this.estado[0][7]) {
-                    this.estado = this.newMatrix.moveUBackIn(this.estado)
-                    this.estado = this.newMatrix.moveUBackIn(this.estado)
-                    stringText += "TRTR"
-                } else if (this.estado[0][4] === this.estado[0][7] && this.estado[0][4] === this.estado[0][3]) {
-                    this.estado = this.newMatrix.moveUIn(this.estado)
-                    stringText += "TL"
+        if(!completed){
+            for (var j = 0; j < 30; j++) {
+                if(!(this.estado[0][4] === this.estado[0][1] && this.estado[0][4] === this.estado[0][3]
+                    && this.estado[0][4] === this.estado[0][5] && this.estado[0][4] === this.estado[0][7])) {
+                    if (this.estado[0][4] === this.estado[0][3] && this.estado[0][4] === this.estado[0][5]) {
+                    } else if (this.estado[0][4] === this.estado[0][1] && this.estado[0][4] === this.estado[0][7]) {
+                        this.estado = this.newMatrix.moveUIn(this.estado)
+                        stringText += "TL"
+                        arrayState.push(["TL",0])
+                    } else if (this.estado[0][4] === this.estado[0][1] && this.estado[0][4] === this.estado[0][3]) {
+                    } else if (this.estado[0][4] === this.estado[0][1] && this.estado[0][4] === this.estado[0][5]) {
+                        this.estado = this.newMatrix.moveUBackIn(this.estado)
+                        stringText += "TR"
+                        arrayState.push(["TR",0])
+                    } else if (this.estado[0][4] === this.estado[0][5] && this.estado[0][4] === this.estado[0][7]) {
+                        this.estado = this.newMatrix.moveUBackIn(this.estado)
+                        this.estado = this.newMatrix.moveUBackIn(this.estado)
+                        stringText += "TRTR"
+                        arrayState.push(["TRTR",0])
+                    } else if (this.estado[0][4] === this.estado[0][7] && this.estado[0][4] === this.estado[0][3]) {
+                        this.estado = this.newMatrix.moveUIn(this.estado)
+                        stringText += "TL"
+                        arrayState.push(["TL",0])
+                    }
+                    var tempvar=this.formula1()
+                    stringText+=tempvar
+                    arrayState.push([tempvar,0])
+                }else{
+                    break
                 }
-                stringText += this.formula1();
-            }else{
-                break
+            }
+
+            for (var j = 0; j < 30; j++) {
+                if(!(this.estado[1][1] === this.estado[1][4])) {
+                    this.estado = this.newMatrix.moveUIn(this.estado)
+                    stringText += "TL"
+                    arrayState.push(["TL",0])
+                }else{
+                    completed=true
+                    break
+                }
             }
         }
 
-        for (var j = 0; j < 30; j++) {
-            if(!(this.estado[1][1] === this.estado[1][4])) {
-                this.estado = this.newMatrix.moveUIn(this.estado)
-                stringText += "TL"
-            }else{
-                return stringText
-            }
-        }
-        return "erro"
+        if(completed)
+            return [stringText,arrayState]
+        else
+            return ["erro"]
     }
 
     debugHelper() {

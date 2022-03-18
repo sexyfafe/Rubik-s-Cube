@@ -142,30 +142,43 @@ function main(){
     });
     document.getElementById("ResolucaoAutomaticaFase4").addEventListener("click", function(){
         if(self.cube.currentRotationArray.length === 0) {
-            let rotation1 =  self.stage3Config.cruz(self.matrixCube.getStates().slice())
+            let fase1 = self.stage3Config.cruz(self.matrixCube.getStates().slice())
+            let rotation1 =  fase1[0]
             self.cube.currentRotation = rotation1
             self.cube.currentRotationArray.push([rotation1,0])
+            console.log(fase1[0])
+            console.log(fase1[1])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase5").addEventListener("click", function(){
         if(self.cube.currentRotationArray.length === 0) {
-            let rotation1 =  self.stage3Config.alinharCruz(self.matrixCube.getStates().slice())
+            let fase1 = self.stage3Config.alinharCruz(self.matrixCube.getStates().slice())
+            let rotation1 =  fase1[0]
             self.cube.currentRotation = rotation1
             self.cube.currentRotationArray.push([rotation1,0])
+            console.log(fase1[0])
+            console.log(fase1[1])
         }
     });
     document.getElementById("ResolucaoAutomaticaFase6").addEventListener("click", function(){
         if(self.cube.currentRotationArray.length === 0) {
-            let rotation1 =  self.stage3Config.cantoCorreto(self.matrixCube.getStates().slice())
+            let fase1 = self.stage3Config.cantoCorreto(self.matrixCube.getStates().slice())
+            let rotation1 =  fase1[0]
             self.cube.currentRotation = rotation1
             self.cube.currentRotationArray.push([rotation1,0])
+            console.log(fase1[0])
+            console.log(fase1[1])
+
         }
     });
     document.getElementById("ResolucaoAutomaticaFase7").addEventListener("click", function(){
         if(self.cube.currentRotationArray.length === 0) {
-            let rotation1 =  self.stage3Config.rotateCorners(self.matrixCube.getStates().slice())
+            let fase1 = self.stage3Config.rotateCorners(self.matrixCube.getStates().slice())
+            let rotation1 =  fase1[0]
             self.cube.currentRotation = rotation1
             self.cube.currentRotationArray.push([rotation1,0])
+            console.log(fase1[0])
+            console.log(fase1[1])
         }
     });
     document.getElementById("ResolucaoAutomatica").addEventListener("click", function(){
